@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Edit Experiment</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        {% include 'global_css.html' %}
+        {% include 'header.html' %}
+
+        <main>
+            <a class="put-experiment-cancel" href="{{url_for("dashboard")}}">
+                ⬅️ Back to Dashboard
+            </a>
+            
+            <h2 class="put-experiment-title"> Edit Your Experiment!</h2>
+            <form class="put-experiment-form" action="{{url_for("put_experiment")}}" method="POST">
+                <input type="text" name="added_by_user_id" value="{{experiment.get("user_id")}}" hidden/>
+                <input type="text" name="experiment_id" value="{{experiment.get("id")}}" hidden>
+                <input class="put-experiment-component" type="text" name="name" placeholder="{{experiment.get("name")}}">
+                <input class="put-experiment-component" type="number" step="0.01" name="train_accuracy" placeholder="{{experiment.get("train_accuracy")}}">
+                <input class="put-experiment-component" type="number" step="0.01" name="validation_accuracy" placeholder="{{experiment.get("validation_accuracy")}}">
+                <input class="put-experiment-component" type="number" step="0.01" name="test_accuracy" placeholder="{{experiment.get("test_accuracy")}}">
+                <input class="put-experiment-component" type="text" name="optimizer" placeholder="{{experiment.get("optimizer")}}">
+                <input class="put-experiment-component" type="number" name="epochs" placeholder="{{experiment.get("epochs")}}">
+                <input class="put-experiment-component" type="number" step="0.0001" name="learning_rate" placeholder="{{experiment.get("learning_rate")}}">
+                <input class="put-experiment-component" type="number" name="patience" placeholder="{{experiment.get("patience")}}">
+                <select class="put-experiment-component" name="dataset_id">
+                    <option value="" hidden>Select the dataset used</option>
+                    {% for item in datasets: %}
+                        <option value="{{item.get("id")}}" {% if experiment.get("dataset_id") == item.get("id") %}selected{% endif %}>{{item.get("name")}}</option>
+                    {% endfor %}
+                </select>
+                <input class="put-experiment-component submit" type="submit" value="Save">
+            </form>
+        </main>
+    </body>
+    <style>
+        main {
+            width: 100vw;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .put-experiment-cancel {
+            position: absolute;
+            top: 3rem;
+            right: 3rem;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .put-experiment-title {
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 400;
+        }
+
+        .put-experiment-form {
+            margin: 0 auto;
+            height: fit-content;
+            margin-top: 2rem;
+            width: 30vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            border: 0.05rem solid var(--secondary-color);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0px 4px 8px rgba(255, 152, 0, 0.3), 0px 8px 16px rgba(255, 152, 0, 0.2);
+        }
+
+        .put-experiment-component {
+            color: var(--primary-bg);
+            height: 2.8rem;
+            border: 0;
+            outline: none;
+            border-radius: 0.2rem;
+            padding: 0 0.4rem;
+            width: 100%;
+        }
+
+        .put-experiment-submit-container {
+            display: flex;
+            width: 100%;
+            outline: none;
+            border: 0;
+            gap: 1rem;
+        }
+
+        .put-experiment-component.submit {
+            background: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+    </style>
+</html>

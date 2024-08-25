@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Header</title>
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <header class="header">
+            <div class="side-info">
+                <div class="welcome-message">
+                    {% if name %}
+                        <span class="header-title">Welcome, {{ name }}!</span>
+                    {% endif %}
+                </div>
+                <div class="login-logout">
+                    {% if name %}
+                        <form action="{{ url_for('logout') }}" method="POST">
+                            <button class="logout" type="submit">
+                                <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Door icon -->
+                                    <path d="M6 2H18c1.1 0 2 .9 2 2v16c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2zm0 2v16h12V4H6zm7 7v-2h-5v2h5zm0 4v-2h-5v2h5z" fill="#FFFFFF"/>
+                                    <!-- Arrow icon -->
+                                    <path d="M16.59 13.59L14.17 16l-1.42-1.42L15.34 12l-2.59-2.59L14.17 8l2.42 2.42L18.83 12l-2.42 2.42z" fill="#FFFFFF"/>
+                                </svg>
+                            </button>
+                        </form>
+                        <a href="{{ url_for('logout') }}" class="login-link">Logout</a>
+                    {% else %}
+                        <form action="{{ url_for('login') }}" method="POST">
+                            <button class="logout" type="submit">
+                                <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Door icon -->
+                                    <path d="M6 2H18c1.1 0 2 .9 2 2v16c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2zm0 2v16h12V4H6zm7 7v-2h-5v2h5zm0 4v-2h-5v2h5z" fill="#FFFFFF"/>
+                                    <!-- Arrow icon -->
+                                    <path d="M16.59 13.59L14.17 16l-1.42-1.42L15.34 12l-2.59-2.59L14.17 8l2.42 2.42L18.83 12l-2.42 2.42z" fill="#FFFFFF"/>
+                                </svg>
+                            </button>
+                        </form>
+                        <a href="{{ url_for('login') }}" class="login-link">Login</a>
+                    {% endif %}
+                </div>
+            </div>
+        </header>        
+        <style>
+            .header {
+                background: url('https://cdn1.vectorstock.com/i/1000x1000/41/55/neural-net-neuron-network-background-vector-16004155.jpg') no-repeat center center;
+                background-size: cover;
+                height: 10vh;
+                width: 100vw;
+                display: flex;
+                justify-content: flex-end; /* Align items to the right */
+                align-items: center;
+                padding: 0 4rem;
+                color: var(--text-color);
+            }
+
+            .side-info {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end; /* Align items to the right */
+            }
+
+            .welcome-message {
+                margin-bottom: 0.5rem;
+            }
+
+            .header-title {
+                font-size: 1.4rem; /* Larger font size for the welcome message */
+                color: var(--text-color);
+            }
+
+            .login-logout {
+                display: flex;
+                align-items: center; /* Align icon and text vertically */
+            }
+
+            .login-link {
+                font-size: 1rem; /* Adjust font size as needed */
+                color: var(--text-color);
+                text-decoration: none;
+                margin-left: 0.5rem; /* Space between icon and text */
+            }
+
+            .logout {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                background: none;
+                border: none;
+                padding: 0;
+            }
+
+            .logout svg {
+                fill: #FFFFFF; /* Set the icon color to white */
+            }
+        </style>
+    </body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Experiments</title>
+        <meta name="description" content="Neural Network Classification Experiments">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        {% include 'global_css.html' %}
+        {% include 'header.html' %}
+
+        <main>
+            {% if name %}
+                <a class="add-experiment" href="{{url_for("add_experiment")}}">
+                    Add Experiment
+                </a>
+            {% endif %}
+            
+            <form action="{{url_for("filter_experiments")}}" method="POST">
+                <input class="filter-component" type="text" name="filter" {% if filter %}value="{{filter}}"{% endif %} placeholder="Filter experiments">
+                <select class="filter-component" name="filter_type">
+                    <!-- Experiment Table Attributes -->
+                    <option value="experiment.name" {% if filter_type == 'experiment.name' %}selected{% endif %}>Name</option>
+                    <option value="experiment.optimizer" {% if filter_type == 'experiment.optimizer' %}selected{% endif %}>Optimizer</option>
+                    <option value="experiment.epochs" {% if filter_type == 'experiment.epochs' %}selected{% endif %}>Epochs</option>
+                    <option value="experiment.learning_rate" {% if filter_type == 'experiment.learning_rate' %}selected{% endif %}>Learning Rate</option>
+                    <option value="experiment.train_accuracy" {% if filter_type == 'experiment.train_accuracy' %}selected{% endif %}>Train Accuracy</option>
+                    <option value="experiment.validation_accuracy" {% if filter_type == 'experiment.validation_accuracy' %}selected{% endif %}>Validation Accuracy</option>
+                    <option value="experiment.test_accuracy" {% if filter_type == 'experiment.test_accuracy' %}selected{% endif %}>Test Accuracy</option>
+                    <option value="experiment.patience" {% if filter_type == 'experiment.patience' %}selected{% endif %}>Patience</option>
+                    <option value="experiment.dataset_id" {% if filter_type == 'experiment.dataset_id' %}selected{% endif %}>Dataset ID</option>
+                    <option value="experiment.added_by_user_id" {% if filter_type == 'experiment.added_by_user_id' %}selected{% endif %}>User ID</option>
+                
+                    <!-- Dataset Table Attributes -->
+                    <option value="dataset.name" {% if filter_type == 'dataset.name' %}selected{% endif %}>Dataset Name</option>
+                    <option value="dataset.size" {% if filter_type == 'dataset.size' %}selected{% endif %}>Dataset Size</option>
+                    <option value="dataset.num_classes" {% if filter_type == 'dataset.num_classes' %}selected{% endif %}>Number of Classes</option>
+                    <option value="dataset.train_split_percentage" {% if filter_type == 'dataset.train_split_percentage' %}selected{% endif %}>Train Split Percentage</option>
+                    <option value="dataset.val_split_percentage" {% if filter_type == 'dataset.val_split_percentage' %}selected{% endif %}>Validation Split Percentage</option>
+                    <option value="dataset.test_split_percentage" {% if filter_type == 'dataset.test_split_percentage' %}selected{% endif %}>Test Split Percentage</option>
+                    <option value="dataset.imbalance_ratio" {% if filter_type == 'dataset.imbalance_ratio' %}selected{% endif %}>Imbalance Ratio</option>
+                
+                    <!-- App User Table Attributes -->
+                    <option value="app_user.name" {% if filter_type == 'app_user.name' %}selected{% endif %}>User Name</option>
+                    <option value="app_user.email" {% if filter_type == 'app_user.email' %}selected{% endif %}>User Email</option>
+                </select>
+                           
+                <input class="filter-component submit" type="submit" value="Filter">
+            </form>
+            
+            <div class="experiments-list">
+                {% for experiment in data %}
+                    <div class="experiment-card">
+                        <section class="experiment-info-container">
+                            <div class="experiment-info">
+                                <span class="experiment-name">{{experiment.get("name")}}</span>
+                                <span class="experiment-id">ID: {{experiment.get("id")}}</span>
+                                <span class="experiment-id">User: {{experiment.get("user_name")}}</span>
+                                <span>Optimizer: {{experiment.get("optimizer")}}</span>
+                                <span>Epochs: {{experiment.get("epochs")}}</span>
+                                <span>Learning Rate: {{experiment.get("learning_rate")}}</span>
+                                <span>Patience: {{experiment.get("patience")}}</span>
+                                <span>Dataset: 
+                                    <a href="{{ url_for('dataset', experiment_id=experiment.get('id')) }}" class="dataset-link">{{experiment.get("dataset_id")}}</a>
+                                </span>
+                                {% if dataset and experiment_id and experiment.get("id") == experiment_id%}
+                                    <span class="dataset-info">&nbsp&nbsp Name: {{dataset.get("name")}}</span>
+                                    <span class="dataset-info">&nbsp&nbsp Size: {{dataset.get("size")}}</span>
+                                    <span class="dataset-info">&nbsp&nbsp Classes: {{dataset.get("n_classes")}}</span>
+                                    <span class="dataset-info">&nbsp&nbsp Train split: {{dataset.get("train_split")}}</span>
+                                    <span class="dataset-info">&nbsp&nbsp Val split: {{dataset.get("val_split")}}</span>
+                                    <span class="dataset-info">&nbsp&nbsp Test split: {{dataset.get("test_split")}}</span>
+                                    <span class="dataset-info">&nbsp&nbsp Imbalance ratio: {{dataset.get("imbalance_ratio")}}</span>
+                                {% endif %}
+                                <span>Train Accuracy: {{experiment.get("train_accuracy")}}</span>
+                                <span>Validation Accuracy: {{experiment.get("validation_accuracy")}}</span>
+                                <span>Test Accuracy: {{experiment.get("test_accuracy")}}</span>
+                            </div>
+                            <div class="experiment-actions">
+                                {% if session_id and experiment.get("user_id") == session_id %}
+                                    <form action="{{url_for("put_experiment")}}" method="POST">
+                                        <input type="text" name="added_by_user_id" value="{{experiment.get("user_id")}}" hidden/>
+                                        <input type="hidden" name="experiment_id" value="{{experiment.get("id")}}" />
+                                        <input class="experiment-button submit edit" type="submit" value="Edit"/>
+                                    </form>
+                                    <form action="{{url_for("delete_experiment")}}" method="POST">
+                                        <input type="text" name="added_by_user_id" value="{{experiment.get("user_id")}}" hidden/>
+                                        <input type="hidden" name="experiment_id" value="{{experiment.get("id")}}" />
+                                        <input class="experiment-button submit" type="submit" value="Delete"/>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </section>
+                    </div>
+                {% endfor %}
+            </div>
+        </main>
+    </body>
+    <style>
+        .add-experiment {
+            position: absolute;
+            top: 1.4rem;
+            right: 1.4rem;
+            text-decoration: none;
+            background: var(--link-color);
+            color: var(--secondary-bg);
+            padding: 0.5rem 0.7rem;
+            border-radius: 0.3rem;
+            font-size: 1.1rem;
+        }
+    
+        .title {
+            margin-top: -1rem;
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+    
+        .filter-component {
+            color: var(--primary-bg);
+            height: 2rem;
+            border: 0;
+            outline: none;
+            border-radius: 0.2rem;
+            padding: 0 0.4rem;
+            min-width: 5rem;
+        }
+    
+        .filter-component + .filter-component {
+            margin-left: 0.4rem;
+        }
+
+        .filter-component option {
+            color: inherit; /* Inherit the font color */
+            background-color: inherit; /* Match the background color */
+        }
+
+        .filter-component.submit {
+            background: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+    
+        .experiments-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjusted grid template for responsiveness */
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+    
+        .experiment-card {
+            padding: 1rem;
+            background: var(--primary-bg);
+            border: 0.05rem solid var(--secondary-color);
+            border-radius: 0.4rem;
+            box-shadow: 0px 4px 8px rgba(255, 152, 0, 0.3), 0px 8px 16px rgba(255, 152, 0, 0.2);
+            display: flex;
+            flex-direction: row; /* Horizontal layout for cards */
+            align-items: center; /* Align items vertically */
+            position: relative;
+            gap: 1rem; /* Space between items in the card */
+        }
+    
+        .experiment-info-container {
+            display: flex;
+            flex-direction: row; /* Horizontal layout for info inside the card */
+            flex: 1;
+            gap: 1rem; /* Space between info columns */
+            align-items: center;
+            flex-wrap: wrap; /* Allow wrapping if necessary */
+        }
+    
+        .experiment-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    
+        .experiment-id {
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            color: var(--subtext-color);
+            
+        }
+
+        .experiment-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        .experiment-actions {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            gap: 0.6rem;
+            align-items: center;
+        }
+    
+        .experiment-button {
+            height: 1.6rem;
+            width: 4rem;
+            border-radius: 0.2rem;
+            border: 0;
+            color: var(--secondary-bg);
+        }
+    
+        .experiment-button.edit {
+            background: var(--secondary-color);
+        }
+
+        .dataset-link {
+            color: var(--link-color); /* Use the link color variable or any desired color */
+            text-decoration: underline; /* Optional: Underline to indicate it's a link */
+        }
+
+        .dataset-link:hover {
+            text-decoration: none; /* Optional: Remove underline on hover */
+            color: var(--hover-color); /* Optional: Change color on hover */
+        }
+
+        .dataset-info {
+            font-size: 1.0rem;
+            margin-bottom: 0.1rem;
+            color: var(--subtext-color);
+        }
+    </style>    
+</html>
