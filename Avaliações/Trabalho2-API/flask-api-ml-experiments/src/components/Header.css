@@ -1,0 +1,52 @@
+.header {
+    background: url('https://cdn1.vectorstock.com/i/1000x1000/41/55/neural-net-neuron-network-background-vector-16004155.jpg') no-repeat center center;
+    background-size: cover;
+    height: 10vh;
+    width: 100vw;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 4rem;
+    color: var(--text-color);
+  }
+  
+  .side-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .welcome-message {
+    margin-bottom: 0.5rem;
+  }
+  
+  .header-title {
+    font-size: 1.4rem;
+    color: var(--text-color);
+  }
+  
+  .login-logout {
+    display: flex;
+    align-items: center;
+  }
+  
+  .login-link {
+    font-size: 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    margin-left: 0.5rem;
+  }
+  
+  .logout {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+  
+  .logout svg {
+    fill: #FFFFFF;
+  }
+  

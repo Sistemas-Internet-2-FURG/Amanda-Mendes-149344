@@ -1,0 +1,54 @@
+.edit-experiment-container {
+    width: 100vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.put-experiment-cancel {
+    position: absolute;
+    top: 3rem;
+    right: 3rem;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.put-experiment-title {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 400;
+}
+
+.put-experiment-form {
+    margin: 0 auto;
+    margin-top: 2rem;
+    width: 30vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    border: 0.05rem solid var(--secondary-color);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0px 4px 8px rgba(255, 152, 0, 0.3), 0px 8px 16px rgba(255, 152, 0, 0.2);
+}
+
+.put-experiment-component {
+    color: var(--primary-bg);
+    height: 2.8rem;
+    border: 0;
+    outline: none;
+    border-radius: 0.2rem;
+    padding: 0 0.4rem;
+    width: 100%;
+}
+
+.put-experiment-component.submit {
+    background: var(--secondary-color);
+    font-size: 0.9rem;
+}
+
+.put-experiment-component option {
+    color: black; /* Ensure the color for all options is black */
+}

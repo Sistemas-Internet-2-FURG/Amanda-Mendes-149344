@@ -1,0 +1,132 @@
+.add-experiment {
+    position: absolute;
+    top: 1.4rem;
+    right: 1.4rem;
+    text-decoration: none;
+    background: var(--link-color);
+    color: var(--secondary-bg);
+    padding: 0.5rem 0.7rem;
+    border-radius: 0.3rem;
+    font-size: 1.1rem;
+}
+
+.title {
+    margin-top: -1rem;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    font-weight: 400;
+}
+
+.filter-component {
+    color: var(--primary-bg);
+    height: 2rem;
+    border: 0;
+    outline: none;
+    border-radius: 0.2rem;
+    padding: 0 0.4rem;
+    min-width: 5rem;
+}
+
+.filter-component + .filter-component {
+    margin-left: 0.4rem;
+}
+
+.filter-component option {
+    color: inherit; /* Inherit the font color */
+    background-color: inherit; /* Match the background color */
+}
+
+.filter-component.submit {
+    background: var(--secondary-color);
+    font-size: 0.9rem;
+}
+
+.experiments-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjusted grid template for responsiveness */
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.experiment-card {
+    padding: 1rem;
+    background: var(--primary-bg);
+    border: 0.05rem solid var(--secondary-color);
+    border-radius: 0.4rem;
+    box-shadow: 0px 4px 8px rgba(255, 152, 0, 0.3), 0px 8px 16px rgba(255, 152, 0, 0.2);
+    display: flex;
+    flex-direction: row; /* Horizontal layout for cards */
+    align-items: center; /* Align items vertically */
+    position: relative;
+    gap: 1rem; /* Space between items in the card */
+}
+
+.experiment-info-container {
+    display: flex;
+    flex-direction: row; /* Horizontal layout for info inside the card */
+    flex: 1;
+    gap: 1rem; /* Space between info columns */
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping if necessary */
+}
+
+.experiment-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.experiment-id {
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    color: var(--subtext-color);
+    
+}
+
+.experiment-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+.experiment-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 0.6rem;
+    align-items: center;
+}
+
+.experiment-button {
+    height: 1.6rem;
+    width: 4rem;
+    border-radius: 0.2rem;
+    border: 0;
+    color: var(--secondary-bg);
+}
+
+.experiment-button.edit {
+    background: var(--secondary-color);
+}
+
+.dataset-link {
+    color: var(--link-color); /* Use the link color variable or any desired color */
+    text-decoration: underline; /* Optional: Underline to indicate it's a link */
+}
+
+.dataset-link:hover {
+    text-decoration: none; /* Optional: Remove underline on hover */
+    color: var(--hover-color); /* Optional: Change color on hover */
+}
+
+.dataset-info {
+    font-size: 1.0rem;
+    margin-bottom: 0.1rem;
+    color: var(--subtext-color);
+}
+
+.dataset-info span {
+    display: block; /* Ensures each span is on a new line */
+    padding-left: 1rem; /* Indent the text */
+}
